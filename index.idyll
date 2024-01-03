@@ -1,0 +1,73 @@
+[meta title:"D'Hondt" description:"Short description of your project" /]
+
+[Header
+  title:" Ejemplo del funcionamiento de sistema electoral D'Hondt en Chile"
+  subtitle:"Nuevo sistema electoral chileno explicado"
+  author:"Constanza Ravanal y Gianfranco Giglio" /]
+
+[data name:"dataset_partidos" source:"votos_por_partido.csv" /]
+[data name:"dataset_candidatos" source:"votos_por_candidato.csv" /]
+
+Para esta demostración usaremos la información de las elecciónes del 2017 de diputados del distrito 11 de la región metropolitana, que contiene las comunas de: La Reina, Las Condes, Lo Barnechea, Peñalonen y Vitacura.
+
+## Paso 1: Votación
+
+[BcCandidatos data:dataset_candidatos /]
+
+En primera instancias los ciudadanos votan por un candidato en particular. Aquí se ven los resultados de los mas vorados, la lista completa de candidatos es mucho mas grande.Cada candidato, aunque sea independiente, debe presentarse por un partido. Los partidos forman pactos electorales. Los candidatos del pacto electoral Frente Amplio están en amarillo, los de La Fuerza de la Mayoría en azul, los de convergencia democratica en verde y los de Chile Vamos en rojo.
+
+## Paso 2: Calculo por pacto electoral
+
+
+
+
+
+
+[var name:"etapa" value:0 /]
+
+[Scroller currentStep:etapa]
+
+  [Graphic style:`{padding: 50}`]
+      [BcGeneralDhondt data:dataset_partidos etapa:etapa /]
+  [/Graphic]
+
+  [Fixed]
+  ###Escaños ganados
+    [EscanosGanados etapa:etapa data:dataset_partidos /]
+  [/Fixed]
+
+
+  [Step]
+    Inicialmente todas las listas parten con el total de sus votos.
+  [/Step]
+
+  [Step]
+  La lista con mayor votación, en este caso Chile Vamos, gana un escaño y su total de votos se divide por la cantidad de escaños ganados mas uno, en este caso por 2.
+  [/Step]
+
+  [Step]
+  Se repite el proceso anterior. Esta vez las votaciónes de Chila Vamos se dividen por 3.
+  [/Step]
+
+  [Step]
+   Se continúa el mismo proceso hasta llenar todos los escaños.
+  [/Step]
+
+  [Step]
+  En este caso, tras multiples divisiónes del total de Chile Vamos, el Frente Amplio lo supera y gana gana un escaño.
+  [/Step]
+
+  [Step]
+
+  [/Step]
+
+  [Step]
+  Con 6 ciclos de este proceso ya se han asignado los seis escaños, que corresponden al total para esta circunscripción.
+  [/Step]
+
+[/Scroller]
+
+[Fixed]
+###Escaños ganados
+  [EscanosGanados etapa:etapa data:dataset_partidos /]
+[/Fixed]
